@@ -1,0 +1,7 @@
+# Note: This script uses a LinearSVC model and TfidfVectorizer for feature extraction. You can modify the script to use other models and feature extraction techniques based on your requirements.
+
+# You can modify the script to include other preprocessing steps based on your requirements.
+
+# Note: This script uses the TfidfVectorizer and LinearSVC model that were trained earlier to classify tweets as AI-generated or not. You can modify the script to search for   posts on other social media platforms and classify them based on your requirements. Additionally, you may need to modify the script to take appropriate action when an AI-  generated post is detected.
+
+# Note that you will need to replace the placeholders (e.g. your_consumer_key_here) with your own authentication credentials for each platform in order to use this script.
