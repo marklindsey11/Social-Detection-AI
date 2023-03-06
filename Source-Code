@@ -1,0 +1,833 @@
+Import necessary libraries for data collection from social media platforms
+import tweepy
+from instagram_private_api import (
+    Client, 
+    ClientCompatPatch, 
+    ClientError, 
+    ClientLoginRequiredError
+)
+import praw
+import facebook
+import linkedin_api
+from telethon import TelegramClient
+import vk_api
+
+# Set up authentication credentials for each platform
+# Twitter API credentials
+consumer_key = 'your_consumer_key_here'
+consumer_secret = 'your_consumer_secret_here'
+access_token = 'your_access_token_here'
+access_token_secret = 'your_access_token_secret_here'
+
+# Instagram API credentials
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Reddit API credentials
+client_id = 'your_client_id_here'
+client_secret = 'your_client_secret_here'
+user_agent = 'your_user_agent_here'
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Facebook API credentials
+access_token = 'your_access_token_here'
+page_id = 'your_page_id_here'
+
+# LinkedIn API credentials
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Telegram API credentials
+api_id = 'your_api_id_here'
+api_hash = 'your_api_hash_here'
+phone_number = 'your_phone_number_here'
+
+# VK API credentials
+api_key = 'your_api_key_here'
+api_secret = 'your_api_secret_here'
+access_token = 'your_access_token_here'
+user_id = 'your_user_id_here'
+
+# Import necessary libraries for data collection from social media platforms
+import tweepy
+from instagram_private_api import (
+    Client, 
+    ClientCompatPatch, 
+    ClientError, 
+    ClientLoginRequiredError
+)
+import praw
+import facebook
+import linkedin_api
+from telethon import TelegramClient
+import vk_api
+
+# Import necessary libraries for data preparation
+import pandas as pd
+import numpy as np
+import nltk
+from nltk.corpus import stopwords
+import re
+from sklearn.model_selection import train_test_split
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
+from textaugment import Wordnet
+from PIL import Image
+from keras.preprocessing import image
+from keras.applications.vgg16 import preprocess_input
+
+# Set up authentication credentials for each platform
+# Twitter API credentials
+consumer_key = 'your_consumer_key_here'
+consumer_secret = 'your_consumer_secret_here'
+access_token = 'your_access_token_here'
+access_token_secret = 'your_access_token_secret_here'
+
+# Instagram API credentials
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Reddit API credentials
+client_id = 'your_client_id_here'
+client_secret = 'your_client_secret_here'
+user_agent = 'your_user_agent_here'
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Facebook API credentials
+access_token = 'your_access_token_here'
+page_id = 'your_page_id_here'
+
+# LinkedIn API credentials
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Telegram API credentials
+api_id = 'your_api_id_here'
+api_hash = 'your_api_hash_here'
+phone_number = 'your_phone_number_here'
+
+# VK API credentials
+api_key = 'your_api_key_here'
+api_secret = 'your_api_secret_here'
+access_token = 'your_access_token_here'
+user_id = 'your_user_id_here'
+
+# Initialize Wordnet for data augmentation
+w = Wordnet()
+
+# Collect data from social media platforms
+# Twitter
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
+
+twitter_data = []
+
+for tweet in tweepy.Cursor(api.search_tweets, q='your_query_here').items(1000):
+    twitter_data.append(tweet.text)
+
+# Instagram
+api = Client(username, password)
+
+instagram_data = []
+
+results = api.feed_timeline()
+for post in results.get('feed_items', []):
+    if 'media_or_ad' in post['media_or_ad']:
+        if 'caption' in post['media_or_ad']:
+            instagram_data.append(post['media_or_ad']['caption']['text'])
+
+# Reddit
+reddit_data = []
+
+reddit = praw.Reddit(client_id=client_id,
+                     client_secret=client_secret,
+                     user_agent=user_agent,
+                     username=username,
+                     password=password)
+
+subreddit = reddit.subreddit('your_subreddit_here')
+for post in subreddit.top(limit=1000):
+    reddit_data.append(post.title)
+    reddit_data.append(post.selftext)
+
+# Facebook
+graph = facebook.GraphAPI(access_token)
+posts = graph.get_connections(page_id, 'posts')
+facebook_data = []
+
+while True:
+    try:
+        for post in posts['data']:
+            if 'message' in post:
+                facebook_data.append(post['message'])
+
+        posts = requests.get(posts['paging']['next']).json()
+    except KeyError:
+        break
+
+# LinkedIn
+api = linkedin_api.Linkedin(username, password)
+linkedin_data = []
+
+for post in api.get_feed():
+    if 'description' in post:
+        linkedin
+
+# Import necessary libraries for data analysis
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load training datasets
+twitter_data = pd.read_csv('twitter_data.csv')
+instagram_data = pd.read_csv('instagram_data.csv')
+reddit_data = pd.read_csv('reddit_data.csv')
+facebook_data = pd.read_csv('facebook_data.csv')
+linkedin_data = pd.read_csv('linkedin_data.csv')
+
+# Combine all datasets into a single dataframe
+data = pd.concat([twitter_data, instagram_data, reddit_data, facebook_data, linkedin_data])
+
+# Print dataset statistics
+print("Number of samples:", len(data))
+print("Number of unique classes:", len(data['class'].unique()))
+
+# Visualize class distribution
+sns.countplot(data['class'])
+plt.title('Class Distribution')
+plt.xlabel('Class')
+plt.ylabel('Count')
+plt.show()
+
+# Perform data cleaning and preprocessing
+# Remove duplicates
+data = data.drop_duplicates()
+print("Number of samples after removing duplicates:", len(data))
+
+# Remove stop words
+stop_words = set(stopwords.words('english'))
+data['text'] = data['text'].apply(lambda x: ' '.join([word for word in x.split() if word.lower() not in stop_words]))
+
+# Remove punctuation and special characters
+data['text'] = data['text'].apply(lambda x: re.sub('[^a-zA-z0-9\s]', '', x))
+
+# Convert text to lowercase
+data['text'] = data['text'].apply(lambda x: x.lower())
+
+# Train/test split
+X_train, X_test, y_train, y_test = train_test_split(data['text'], data['class'], test_size=0.2, random_state=42)
+
+# Tokenization and sequence padding
+tokenizer = Tokenizer(num_words=5000)
+tokenizer.fit_on_texts(X_train)
+
+X_train = tokenizer.texts_to_sequences(X_train)
+X_test = tokenizer.texts_to_sequences(X_test)
+
+vocab_size = len(tokenizer.word_index) + 1
+
+max_len = 100
+X_train = pad_sequences(X_train, padding='post', maxlen=max_len)
+X_test = pad_sequences(X_test, padding='post', maxlen=max_len)
+
+# Synthetic data augmentation
+augmented_data = []
+
+for i in range(len(X_train)):
+    augmented_data.append(' '.join(w.augment(X_train[i])))
+
+X_train = np.concatenate((X_train, pad_sequences(tokenizer.texts_to_sequences(augmented_data), padding='post', maxlen=max_len)))
+
+y_train = np.concatenate((y_train, y_train))
+
+# Train and evaluate model
+model = ...
+
+history = model.fit(X_train, y_train, epochs=10, validation_data=(X_test, y_test))
+
+# Evaluate model performance
+train_loss, train_acc = model.evaluate(X_train, y_train)
+test_loss, test_acc = model.evaluate(X_test, y_test)
+
+print("Train loss:", train_loss)
+print("Train accuracy:", train_acc)
+print("Test loss:", test_loss)
+print("Test accuracy:", test_acc)
+
+Mark Lindsey
+Write a script to train a machine learning model with the datasets
+
+Here's an example script for training a machine learning model with the datasets:
+
+python
+
+# Import necessary libraries for machine learning
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.svm import LinearSVC
+from sklearn.metrics import accuracy_score, classification_report
+
+# Load training datasets
+twitter_data = pd.read_csv('twitter_data.csv')
+instagram_data = pd.read_csv('instagram_data.csv')
+reddit_data = pd.read_csv('reddit_data.csv')
+facebook_data = pd.read_csv('facebook_data.csv')
+linkedin_data = pd.read_csv('linkedin_data.csv')
+
+# Combine all datasets into a single dataframe
+data = pd.concat([twitter_data, instagram_data, reddit_data, facebook_data, linkedin_data])
+
+# Perform data cleaning and preprocessing
+# Remove duplicates
+data = data.drop_duplicates()
+
+# Remove stop words
+stop_words = set(stopwords.words('english'))
+data['text'] = data['text'].apply(lambda x: ' '.join([word for word in x.split() if word.lower() not in stop_words]))
+
+# Remove punctuation and special characters
+data['text'] = data['text'].apply(lambda x: re.sub('[^a-zA-z0-9\s]', '', x))
+
+# Convert text to lowercase
+data['text'] = data['text'].apply(lambda x: x.lower())
+
+# Create feature vectors using TfidfVectorizer
+vectorizer = TfidfVectorizer(max_features=5000)
+X = vectorizer.fit_transform(data['text'])
+y = data['class']
+
+# Train/test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train LinearSVC model
+model = LinearSVC()
+model.fit(X_train, y_train)
+
+# Predict on test set
+y_pred = model.predict(X_test)
+
+# Evaluate model performance
+accuracy = accuracy_score(y_test, y_pred)
+report = classification_report(y_test, y_pred)
+
+print("Accuracy:", accuracy)
+print("Classification report:\n", report)
+
+#Note: This script uses a LinearSVC model and TfidfVectorizer for feature extraction. 
+#You can modify the script to use other models and feature extraction techniques based on your requirements.
+
+# Import necessary libraries
+import pandas as pd
+import re
+from nltk.corpus import stopwords
+
+# Load data
+data = pd.read_csv('raw_data.csv')
+
+# Remove unnecessary columns
+data = data.drop(columns=['id', 'timestamp'])
+
+# Remove duplicates
+data = data.drop_duplicates()
+
+# Remove NaN values
+data = data.dropna()
+
+# Preprocess text data
+# Remove URLs
+data['text'] = data['text'].apply(lambda x: re.sub(r'http\S+', '', x))
+
+# Remove mentions and hashtags
+data['text'] = data['text'].apply(lambda x: re.sub(r'@[A-Za-z0-9]+', '', x))
+data['text'] = data['text'].apply(lambda x: re.sub(r'#', '', x))
+
+# Remove punctuation and special characters
+data['text'] = data['text'].apply(lambda x: re.sub('[^a-zA-z0-9\s]', '', x))
+
+# Convert text to lowercase
+data['text'] = data['text'].apply(lambda x: x.lower())
+
+# Remove stop words
+stop_words = set(stopwords.words('english'))
+data['text'] = data['text'].apply(lambda x: ' '.join([word for word in x.split() if word.lower() not in stop_words]))
+
+# Save preprocessed data to CSV file
+data.to_csv('preprocessed_data.csv', index=False)
+
+# Note: This script uses NLTK library for stop words removal. 
+# Download the NLTK library and the stop words corpus using the following commands:
+
+import nltk
+nltk.download('stopwords')
+
+
+#You can modify the script to include other preprocessing steps based on your requirements.
+
+# Import necessary libraries
+import tweepy
+import time
+
+# Define API credentials for Twitter
+consumer_key = 'your_consumer_key'
+consumer_secret = 'your_consumer_secret'
+access_token = 'your_access_token'
+access_token_secret = 'your_access_token_secret'
+
+# Authenticate with Twitter API
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
+
+# Define keywords to search for
+keywords = ['AI generated', 'AI-created', 'AI-written']
+
+# Define function to search for tweets containing keywords
+def search_tweets():
+    for keyword in keywords:
+        tweets = api.search(q=keyword, lang='en', tweet_mode='extended')
+        for tweet in tweets:
+            # Extract tweet text
+            if 'retweeted_status' in dir(tweet):
+                text = tweet.retweeted_status.full_text
+            else:
+                text = tweet.full_text
+            
+            # Preprocess tweet text
+            # Remove URLs
+            text = re.sub(r'http\S+', '', text)
+            # Remove mentions and hashtags
+            text = re.sub(r'@[A-Za-z0-9]+', '', text)
+            text = re.sub(r'#', '', text)
+            # Remove punctuation and special characters
+            text = re.sub('[^a-zA-z0-9\s]', '', text)
+            # Convert text to lowercase
+            text = text.lower()
+            # Remove stop words
+            stop_words = set(stopwords.words('english'))
+            text = ' '.join([word for word in text.split() if word.lower() not in stop_words])
+            
+            # Perform classification using pre-trained model
+            vectorized_text = vectorizer.transform([text])
+            prediction = model.predict(vectorized_text)[0]
+            
+            # If post is AI-generated, take appropriate action
+            if prediction == 1:
+                # Do something with the post (e.g. flag it for review)
+                print("AI-generated post detected:", text)
+            
+while True:
+    # Search for tweets every 5 minutes
+    search_tweets()
+    time.sleep(300)
+
+
+# Import necessary libraries for data collection from social media platforms
+import tweepy
+from instagram_private_api import (
+    Client, 
+    ClientCompatPatch, 
+    ClientError, 
+    ClientLoginRequiredError
+)
+import praw
+import facebook
+import linkedin_api
+from telethon import TelegramClient
+import vk_api
+
+# Set up authentication credentials for each platform
+# Twitter API credentials
+consumer_key = 'your_consumer_key_here'
+consumer_secret = 'your_consumer_secret_here'
+access_token = 'your_access_token_here'
+access_token_secret = 'your_access_token_secret_here'
+
+# Instagram API credentials
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Reddit API credentials
+client_id = 'your_client_id_here'
+client_secret = 'your_client_secret_here'
+user_agent = 'your_user_agent_here'
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Facebook API credentials
+access_token = 'your_access_token_here'
+page_id = 'your_page_id_here'
+
+# LinkedIn API credentials
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Telegram API credentials
+api_id = 'your_api_id_here'
+api_hash = 'your_api_hash_here'
+phone_number = 'your_phone_number_here'
+
+# VK API credentials
+api_key = 'your_api_key_here'
+api_secret = 'your_api_secret_here'
+access_token = 'your_access_token_here'
+user_id = 'your_user_id_here'
+
+# Import necessary libraries for data collection from social media platforms
+import tweepy
+from instagram_private_api import (
+    Client, 
+    ClientCompatPatch, 
+    ClientError, 
+    ClientLoginRequiredError
+)
+import praw
+import facebook
+import linkedin_api
+from telethon import TelegramClient
+import vk_api
+
+# Import necessary libraries for data preparation
+import pandas as pd
+import numpy as np
+import nltk
+from nltk.corpus import stopwords
+import re
+from sklearn.model_selection import train_test_split
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
+from textaugment import Wordnet
+from PIL import Image
+from keras.preprocessing import image
+from keras.applications.vgg16 import preprocess_input
+
+# Set up authentication credentials for each platform
+# Twitter API credentials
+consumer_key = 'your_consumer_key_here'
+consumer_secret = 'your_consumer_secret_here'
+access_token = 'your_access_token_here'
+access_token_secret = 'your_access_token_secret_here'
+
+# Instagram API credentials
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Reddit API credentials
+client_id = 'your_client_id_here'
+client_secret = 'your_client_secret_here'
+user_agent = 'your_user_agent_here'
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Facebook API credentials
+access_token = 'your_access_token_here'
+page_id = 'your_page_id_here'
+
+# LinkedIn API credentials
+username = 'your_username_here'
+password = 'your_password_here'
+
+# Telegram API credentials
+api_id = 'your_api_id_here'
+api_hash = 'your_api_hash_here'
+phone_number = 'your_phone_number_here'
+
+# VK API credentials
+api_key = 'your_api_key_here'
+api_secret = 'your_api_secret_here'
+access_token = 'your_access_token_here'
+user_id = 'your_user_id_here'
+
+# Initialize Wordnet for data augmentation
+w = Wordnet()
+
+# Collect data from social media platforms
+# Twitter
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
+
+twitter_data = []
+
+for tweet in tweepy.Cursor(api.search_tweets, q='your_query_here').items(1000):
+    twitter_data.append(tweet.text)
+
+# Instagram
+api = Client(username, password)
+
+instagram_data = []
+
+results = api.feed_timeline()
+for post in results.get('feed_items', []):
+    if 'media_or_ad' in post['media_or_ad']:
+        if 'caption' in post['media_or_ad']:
+            instagram_data.append(post['media_or_ad']['caption']['text'])
+
+# Reddit
+reddit_data = []
+
+reddit = praw.Reddit(client_id=client_id,
+                     client_secret=client_secret,
+                     user_agent=user_agent,
+                     username=username,
+                     password=password)
+
+subreddit = reddit.subreddit('your_subreddit_here')
+for post in subreddit.top(limit=1000):
+    reddit_data.append(post.title)
+    reddit_data.append(post.selftext)
+
+# Facebook
+graph = facebook.GraphAPI(access_token)
+posts = graph.get_connections(page_id, 'posts')
+facebook_data = []
+
+while True:
+    try:
+        for post in posts['data']:
+            if 'message' in post:
+                facebook_data.append(post['message'])
+
+        posts = requests.get(posts['paging']['next']).json()
+    except KeyError:
+        break
+
+# LinkedIn
+api = linkedin_api.Linkedin(username, password)
+linkedin_data = []
+
+for post in api.get_feed():
+    if 'description' in post:
+        linkedin
+
+# Import necessary libraries for data analysis
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load training datasets
+twitter_data = pd.read_csv('twitter_data.csv')
+instagram_data = pd.read_csv('instagram_data.csv')
+reddit_data = pd.read_csv('reddit_data.csv')
+facebook_data = pd.read_csv('facebook_data.csv')
+linkedin_data = pd.read_csv('linkedin_data.csv')
+
+# Combine all datasets into a single dataframe
+data = pd.concat([twitter_data, instagram_data, reddit_data, facebook_data, linkedin_data])
+
+# Print dataset statistics
+print("Number of samples:", len(data))
+print("Number of unique classes:", len(data['class'].unique()))
+
+# Visualize class distribution
+sns.countplot(data['class'])
+plt.title('Class Distribution')
+plt.xlabel('Class')
+plt.ylabel('Count')
+plt.show()
+
+# Perform data cleaning and preprocessing
+# Remove duplicates
+data = data.drop_duplicates()
+print("Number of samples after removing duplicates:", len(data))
+
+# Remove stop words
+stop_words = set(stopwords.words('english'))
+data['text'] = data['text'].apply(lambda x: ' '.join([word for word in x.split() if word.lower() not in stop_words]))
+
+# Remove punctuation and special characters
+data['text'] = data['text'].apply(lambda x: re.sub('[^a-zA-z0-9\s]', '', x))
+
+# Convert text to lowercase
+data['text'] = data['text'].apply(lambda x: x.lower())
+
+# Train/test split
+X_train, X_test, y_train, y_test = train_test_split(data['text'], data['class'], test_size=0.2, random_state=42)
+
+# Tokenization and sequence padding
+tokenizer = Tokenizer(num_words=5000)
+tokenizer.fit_on_texts(X_train)
+
+X_train = tokenizer.texts_to_sequences(X_train)
+X_test = tokenizer.texts_to_sequences(X_test)
+
+vocab_size = len(tokenizer.word_index) + 1
+
+max_len = 100
+X_train = pad_sequences(X_train, padding='post', maxlen=max_len)
+X_test = pad_sequences(X_test, padding='post', maxlen=max_len)
+
+# Synthetic data augmentation
+augmented_data = []
+
+for i in range(len(X_train)):
+    augmented_data.append(' '.join(w.augment(X_train[i])))
+
+X_train = np.concatenate((X_train, pad_sequences(tokenizer.texts_to_sequences(augmented_data), padding='post', maxlen=max_len)))
+
+y_train = np.concatenate((y_train, y_train))
+
+# Train and evaluate model
+model = ...
+
+history = model.fit(X_train, y_train, epochs=10, validation_data=(X_test, y_test))
+
+# Evaluate model performance
+train_loss, train_acc = model.evaluate(X_train, y_train)
+test_loss, test_acc = model.evaluate(X_test, y_test)
+
+print("Train loss:", train_loss)
+print("Train accuracy:", train_acc)
+print("Test loss:", test_loss)
+print("Test accuracy:", test_acc)
+
+# Import necessary libraries for machine learning
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.svm import LinearSVC
+from sklearn.metrics import accuracy_score, classification_report
+
+# Load training datasets
+twitter_data = pd.read_csv('twitter_data.csv')
+instagram_data = pd.read_csv('instagram_data.csv')
+reddit_data = pd.read_csv('reddit_data.csv')
+facebook_data = pd.read_csv('facebook_data.csv')
+linkedin_data = pd.read_csv('linkedin_data.csv')
+
+# Combine all datasets into a single dataframe
+data = pd.concat([twitter_data, instagram_data, reddit_data, facebook_data, linkedin_data])
+
+# Perform data cleaning and preprocessing
+# Remove duplicates
+data = data.drop_duplicates()
+
+# Remove stop words
+stop_words = set(stopwords.words('english'))
+data['text'] = data['text'].apply(lambda x: ' '.join([word for word in x.split() if word.lower() not in stop_words]))
+
+# Remove punctuation and special characters
+data['text'] = data['text'].apply(lambda x: re.sub('[^a-zA-z0-9\s]', '', x))
+
+# Convert text to lowercase
+data['text'] = data['text'].apply(lambda x: x.lower())
+
+# Create feature vectors using TfidfVectorizer
+vectorizer = TfidfVectorizer(max_features=5000)
+X = vectorizer.fit_transform(data['text'])
+y = data['class']
+
+# Train/test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train LinearSVC model
+model = LinearSVC()
+model.fit(X_train, y_train)
+
+# Predict on test set
+y_pred = model.predict(X_test)
+
+# Evaluate model performance
+accuracy = accuracy_score(y_test, y_pred)
+report = classification_report(y_test, y_pred)
+
+print("Accuracy:", accuracy)
+print("Classification report:\n", report)
+
+# Import necessary libraries
+import pandas as pd
+import re
+from nltk.corpus import stopwords
+
+# Load data
+data = pd.read_csv('raw_data.csv')
+
+# Remove unnecessary columns
+data = data.drop(columns=['id', 'timestamp'])
+
+# Remove duplicates
+data = data.drop_duplicates()
+
+# Remove NaN values
+data = data.dropna()
+
+# Preprocess text data
+# Remove URLs
+data['text'] = data['text'].apply(lambda x: re.sub(r'http\S+', '', x))
+
+# Remove mentions and hashtags
+data['text'] = data['text'].apply(lambda x: re.sub(r'@[A-Za-z0-9]+', '', x))
+data['text'] = data['text'].apply(lambda x: re.sub(r'#', '', x))
+
+# Remove punctuation and special characters
+data['text'] = data['text'].apply(lambda x: re.sub('[^a-zA-z0-9\s]', '', x))
+
+# Convert text to lowercase
+data['text'] = data['text'].apply(lambda x: x.lower())
+
+# Remove stop words
+stop_words = set(stopwords.words('english'))
+data['text'] = data['text'].apply(lambda x: ' '.join([word for word in x.split() if word.lower() not in stop_words]))
+
+# Save preprocessed data to CSV file
+data.to_csv('preprocessed_data.csv', index=False)
+
+# Import necessary libraries
+import tweepy
+import time
+
+# Define API credentials for Twitter
+consumer_key = 'your_consumer_key'
+consumer_secret = 'your_consumer_secret'
+access_token = 'your_access_token'
+access_token_secret = 'your_access_token_secret'
+
+# Authenticate with Twitter API
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
+
+# Define keywords to search for
+keywords = ['AI generated', 'AI-created', 'AI-written']
+
+# Define function to search for tweets containing keywords
+def search_tweets():
+    for keyword in keywords:
+        tweets = api.search(q=keyword, lang='en', tweet_mode='extended')
+        for tweet in tweets:
+            # Extract tweet text
+            if 'retweeted_status' in dir(tweet):
+                text = tweet.retweeted_status.full_text
+            else:
+                text = tweet.full_text
+            
+            # Preprocess tweet text
+            # Remove URLs
+            text = re.sub(r'http\S+', '', text)
+            # Remove mentions and hashtags
+            text = re.sub(r'@[A-Za-z0-9]+', '', text)
+            text = re.sub(r'#', '', text)
+            # Remove punctuation and special characters
+            text = re.sub('[^a-zA-z0-9\s]', '', text)
+            # Convert text to lowercase
+            text = text.lower()
+            # Remove stop words
+            stop_words = set(stopwords.words('english'))
+            text = ' '.join([word for word in text.split() if word.lower() not in stop_words])
+            
+            # Perform classification using pre-trained model
+            vectorized_text = vectorizer.transform([text])
+            prediction = model.predict(vectorized_text)[0]
+            
+            # If post is AI-generated, take appropriate action
+            if prediction == 1:
+                # Do something with the post (e.g. flag it for review)
+                print("AI-generated post detected:", text)
+            
+#while True:
+    # Search for tweets every 5 minutes
+    search_tweets()
+    time.sleep(300)
