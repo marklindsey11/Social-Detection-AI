@@ -1,0 +1,30 @@
+# Social Detection AI "EvE"v2.3
+# Mark Lindsey/Intelligence Clouds
+# Python 3.8 GNU Open-Source Cloud-Native Browser-based
+# https://GitHub.com/marklindsey11/Social-Detection-AI/EvE/
+# https://GitLab.com/marklindsey11/Social-Detection-AI/EvE/
+# 05 MARCH 2023 San Diego CA USA
+
+# Designing an advanced AI social media platform that detects AI-generated post involves several key steps. Here's the approach:
+
+#    Collecting Data: 
+The first step is to collect a large dataset of posts from various social media platforms. This dataset include a range of different types of posts, including text, images, audios and videos.
+
+#    Preprocessing the Data: 
+Once the data has been collected, it is preprocessed to ensure that it is clean and usable. This involves removing any irrelevant or duplicate posts, and cleaning up any formatting or grammatical errors.
+
+#    Training the Model: 
+With the preprocessed data in hand, the next step is to train the machine learning model to recognize different types of posts. This involves using a deep learning algorithm, a neural network, to analyze the data and identify patterns.
+
+#    Evaluating Performance: 
+Once the model has been trained, it is evaluated to ensure that it is accurate and effective. This involves using a range of performance metrics, such as precision and recall, to measure the model's ability to correctly identify different types of posts.
+
+#    Improving the Model: 
+Based on the evaluation results, the model is further refined and self-improves. This involves adjusting the parameters of the algorithm, adding new features to the model to make it more effective.
+
+#    Integrating the Model: 
+Finally, the model integrates into the social media platform's existing infrastructure. This involved me working with the social media platform's developers to ensure that the model is seamlessly integrated into the platform's user interface, and that it works effectively with the platforms APIs.
+
+# Overall, this advanced social media AI detection framework has been carefully designed and tested in order to be effective. By using a combination of machine 
+learning algorithms and careful data analysis, I've created a powerful tool that can help social media platforms to better manage their content and 
+ensure that users have a safe and positive experience online.
