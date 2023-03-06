@@ -1,0 +1,23 @@
+Here are the Python libraries and GitHub repositories that are used to collect large datasets to train the model from various social media platforms:
+
+    Tweepy: A Python library for accessing the Twitter API to collect tweets, retweets, and other data.
+
+    Instagram-API-python: A Python wrapper for the Instagram private API that allows you to scrape user data, posts, and stories.
+
+    PRAW: A Python wrapper for the Reddit API that allows you to scrape posts, comments, and other data.
+
+    Facebook-Scraper: A Python library for scraping public Facebook pages, posts, and comments.
+
+    LinkedIn-Scraper: A Python library for scraping public LinkedIn profiles and data.
+
+    Telethon: A Python library for accessing the Telegram API to collect messages and other data.
+
+    VK-API: A Python library for accessing the VK (Vkontakte) API to collect user data, posts, and other data.
+
+    Social Media APIs: A GitHub repository that contains Python code for accessing various social media APIs, including Twitter, Facebook, Instagram, LinkedIn, and more.
+
+    Tinfoleak: A GitHub repository that contains Python code for collecting and analyzing data from Twitter, including user data, tweets, and more.
+
+    Pushshift: A GitHub repository that contains Python code for collecting and analyzing data from Reddit, including posts, comments, and more.
+
+Using these libraries and repositories, I can collect large datasets from various social media platforms in Python 3.8 and ensure that all components of the project are open-source.
